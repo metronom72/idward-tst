@@ -205,7 +205,10 @@ function getData (key) {
             JSON.parse(window.sessionStorage.getItem(key));
             return data;
         }
-        if (window.temporaryStorage) return JSON.parse(window.temporaryStorage[key]);
+        if (window.temporaryStorage) {
+            return JSON.parse(window.temporaryStorage[key]);
+        }
+        return null;
     } catch (err) {
         if (err instanceof SyntaxError) clearData(key);
         return null;
@@ -236,8 +239,7 @@ function uuidv4 () {
 };
 
 window.onload = function () {
-    var data = getData(key)
-    console.log(data);
+    var data = getData(key);
     state.status = data && data.status;
     state.popup = data ? POPUP_STATES.CLOSED : POPUP_STATES.OPENING;
     toggleWidget(
